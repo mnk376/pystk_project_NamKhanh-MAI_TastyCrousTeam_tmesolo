@@ -152,10 +152,10 @@ def single_race(env, agents, names, scores):
             pos[i] = info['infos'][str]['position']
             dist[i] = info['infos'][str]['distance']
         steps = steps + 1
-        #compter de pas
+
         print(steps)
         if steps == 200:
-            agent[i].isEnd == True #si on a un erreur le kart va s'arrete
+            agents[i].isEnd == True 
 
         done = (nb_finished == 5)
         positions.append(pos)
