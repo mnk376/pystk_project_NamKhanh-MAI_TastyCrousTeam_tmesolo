@@ -25,7 +25,6 @@ class Agent7(KartAgent):
         """
         Ajuste la direction du kart pour suivre le centre de la piste.
         """
-
         steer = action["steer"]
         center = obs["paths_end"][2]
         if (center[2] > 20 and abs(obs["center_path_distance"]) < 3) : 
@@ -35,33 +34,35 @@ class Agent7(KartAgent):
         action["steer"] = np.clip(steer, -1, 1)
         return action
 
-
-    def recule(self, obs,action):
-        if self.steps_count >= 200:  #si le pas passe de 200
-            action["acceleration"] = 0.0
-            action["brake"] = True
-            return action
-
+    #def recule(self, obs,action):
+     #   return action
 
 
     def choose_action(self, obs):
         self.steps_count += 1
-        
 
-
+          
         acceleration = random.random()
         steering = random.random()
         action = {
             "acceleration": acceleration,
-            "steer": steering,
+            "steer":  steering,
             "brake": False, # bool(random.getrandbits(1)),
             "drift": False, #bool(random.getrandbits(1)),
             "nitro": False, #bool(random.getrandbits(1)),
             "rescue":False, #bool(random.getrandbits(1)),
             "fire": False, #bool(random.getrandbits(1)),
         }
-        act_corr = self.recule(obs, action)
-        act_corr = self.path_ajust(obs, action)
-        return act_corr
+
+
+
+        if self.steps_count >= 200:  #si le pas passe de 200
+            action["acceleration"] = -1.0
+            action["brake"] = False
+            return action
+
+        #action = self.recule(obs, action)
+        action = self.path_ajust(obs, action)
+        return action
 
 
